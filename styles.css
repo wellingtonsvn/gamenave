@@ -16,6 +16,8 @@ body {
     align-items: center;
     justify-content: center;
     margin: 0 auto; /* Centralizar horizontalmente */
+    background-image: url('fundo.jpg'); /* Altere o caminho para o diretório onde está sua imagem */
+    background-size: cover; /* Para ajustar a imagem ao tamanho da tela */
 }
 
 #player {
@@ -74,3 +76,23 @@ body {
     font-size: 20px;
 }
 
+#welcomeScreen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.8); /* Fundo semi-transparente */
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+#welcomeScreen button {
+    background-color: #4CAF50; /* Cor de fundo verde */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
