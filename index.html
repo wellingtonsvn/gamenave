@@ -17,6 +17,15 @@
             <h1>Bem-vindo!</h1>
             <p>Use as setas do teclado e espaço para atirar. Bom Game.</p>
             <button id="startButton">Começar</button>
+        </div> <!-- Feche a div #welcomeScreen aqui -->
+        <div id="gameOverScreen" style="display: none;"> <!-- Adicione o estilo 'display: none;' para ocultar inicialmente a tela de Game Over -->
+            <div id="gameOverContent"> <!-- Div para exibir o conteúdo personalizado -->
+                <p>Você pode ser melhor!</p>
+                <p>Nível alcançado: <span id="gameOverLevel">1</span></p>
+                <p>Pontuação atual: <span id="gameOverScore">0</span></p>
+                <button id="restartButton">Reiniciar</button>
+            </div>
+        </div> <!-- Feche a div #gameOverScreen aqui -->
     </div>
 
     <script src="script.js"></script>
