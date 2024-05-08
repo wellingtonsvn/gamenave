@@ -14,33 +14,37 @@ startButton.addEventListener('click', function() {
     startGame();
 });
 
-document.addEventListener('keydown', function(event) {
-    if (event.code === 'ArrowLeft') {
-        movePlayerLeft();
-    } else if (event.code === 'ArrowRight') {
-        movePlayerRight();
-    } else if (event.code === 'Space') {
-        shoot();
-    }
-});
+function startGame() {
+    document.addEventListener('keydown', function(event) {
+        if (event.code === 'ArrowLeft') {
+            movePlayerLeft();
+        } else if (event.code === 'ArrowRight') {
+            movePlayerRight();
+        } else if (event.code === 'Space') {
+            shoot();
+        }
+    });
+
+    setInterval(createEnemy, 2000);
+}
 
 function movePlayerLeft() {
     playerPositionX -= 20;
-    playerPositionX = Math.max(playerPositionX, 0); // Impede que a nave vá além do lado esquerdo
-    playerPositionX = Math.min(playerPositionX, game.offsetWidth - player.offsetWidth); // Impede que a nave vá além do lado direito
+    playerPositionX = Math.max(playerPositionX, 0);
+    playerPositionX = Math.min(playerPositionX, game.offsetWidth - player.offsetWidth);
     player.style.left = playerPositionX + 'px';
 }
 
 function movePlayerRight() {
     playerPositionX += 20;
-    playerPositionX = Math.max(playerPositionX, 0); // Impede que a nave vá além do lado esquerdo
-    playerPositionX = Math.min(playerPositionX, game.offsetWidth - player.offsetWidth); // Impede que a nave vá além do lado direito
+    playerPositionX = Math.max(playerPositionX, 0);
+    playerPositionX = Math.min(playerPositionX, game.offsetWidth - player.offsetWidth);
     player.style.left = playerPositionX + 'px';
 }
 
 function shoot() {
     bullet.style.display = 'block';
-    bullet.style.left = player.offsetLeft + (player.offsetWidth / 6) - 6 + 'px'; // Ajuste para centralizar o tiro
+    bullet.style.left = player.offsetLeft + (player.offsetWidth / 6) - 6 + 'px';
     bullet.style.bottom = '70px';
 
     let bulletInterval = setInterval(function() {
@@ -63,7 +67,7 @@ function checkCollision() {
     enemies.forEach(function(enemy) {
         const enemyRect = enemy.getBoundingClientRect();
         if (bulletRect.bottom >= enemyRect.top && bulletRect.right >= enemyRect.left && bulletRect.left <= enemyRect.right) {
-            enemy.classList.add('hit'); // Marca a nave inimiga como atingida pelo jogador
+            enemy.classList.add('hit');
             enemy.remove();
             bullet.style.display = 'none';
             updateScore();
@@ -74,18 +78,18 @@ function checkCollision() {
 function createEnemy() {
     const enemy = document.createElement('div');
     enemy.classList.add('enemy');
-    const maxEnemyLeft = game.offsetWidth - player.offsetWidth; // Determina o limite máximo para a posição horizontal da nave inimiga
-    enemy.style.left = Math.max(0, Math.min(maxEnemyLeft, Math.random() * maxEnemyLeft)) + 'px'; // Limita a posição horizontal da nave inimiga dentro dos limites da área ocupada pela nave do jogador
+    const maxEnemyLeft = game.offsetWidth - player.offsetWidth;
+    enemy.style.left = Math.max(0, Math.min(maxEnemyLeft, Math.random() * maxEnemyLeft)) + 'px';
     enemy.style.top = '0';
     game.appendChild(enemy);
 
     let enemyInterval = setInterval(function() {
         let enemyTop = parseInt(enemy.style.top);
-        enemy.style.top = (enemyTop + enemySpeed) + 'px'; // Usamos a variável de velocidade aqui
+        enemy.style.top = (enemyTop + enemySpeed) + 'px';
 
         if (enemyTop > window.innerHeight) {
-            gameOver(); // Chamada da função gameOver() quando uma nave inimiga atinge a parte inferior da tela
             if (!enemy.classList.contains('hit')) {
+                gameOver();
                 updateMissedScore();
             }
             enemy.remove();
@@ -96,7 +100,7 @@ function createEnemy() {
 
 function gameOver() {
     alert('melhore :)');
-    location.reload(); // Recarrega a página quando o jogador perder
+    location.reload();
 }
 
 let score = 0;
@@ -106,25 +110,22 @@ function updateScore() {
     score++;
     scoreElement.textContent = score;
 
-    // Verifica se o jogador passou para a próxima fase
     if (score >= PHASE_SCORE_THRESHOLD[currentPhase - 1]) {
         currentPhase++;
-        increaseEnemySpeed(); // Aumenta a velocidade das naves inimigas na próxima fase
-        document.getElementById('levelValue').textContent = currentPhase; // Atualiza o nível na interface
+        increaseEnemySpeed();
+        document.getElementById('levelValue').textContent = currentPhase;
         alert(`Parabéns! Você passou para a fase ${currentPhase}.`);
     }
 }
 
 function increaseEnemySpeed() {
-    enemySpeed += ENEMY_SPEED_INCREMENT; // Aumenta a velocidade das naves inimigas
+    enemySpeed += ENEMY_SPEED_INCREMENT;
 }
 
-let missedScore = 0; // Pontuação por naves inimigas perdidas
+let missedScore = 0;
 const missedScoreElement = document.getElementById('missedScoreValue');
 
 function updateMissedScore() {
     missedScore++;
     missedScoreElement.textContent = missedScore;
 }
-
-setInterval(createEnemy, 2000);
