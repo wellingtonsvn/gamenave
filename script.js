@@ -99,8 +99,25 @@ function createEnemy() {
 }
 
 function gameOver() {
-    alert('melhore :)');
-    location.reload();
+    const levelReached = document.getElementById('levelValue').textContent;
+    const currentScore = scoreElement.textContent;
+
+    const gameOverScreen = document.getElementById('gameOverScreen');
+    const gameOverContent = document.getElementById('gameOverContent');
+
+    gameOverContent.innerHTML = `
+        <h1>Você pode ser melhor!</h1>
+        <p>Nível alcançado: ${levelReached}</p>
+        <p>Pontuação atual: ${currentScore}</p>
+        <button id="restartButton">Reiniciar</button>
+    `;
+    
+    gameOverScreen.style.display = 'block';
+
+    const restartButton = document.getElementById('restartButton');
+    restartButton.addEventListener('click', function() {
+        location.reload(); // Recarrega a página quando o jogador clicar em reiniciar
+    });
 }
 
 let score = 0;
