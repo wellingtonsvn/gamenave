@@ -5,7 +5,7 @@ let playerPositionX = 50;
 let enemySpeed = 2; // Velocidade inicial das naves inimigas
 let currentPhase = 1;
 const PHASE_SCORE_THRESHOLD = [20, 40, 80, 120, 200, 350, 500]; // Pontuação necessária para avançar para a próxima fase
-const ENEMY_SPEED_INCREMENT = 0.3; // Incremento na velocidade das naves inimigas a cada fase
+const ENEMY_SPEED_INCREMENT = 1.0; // Incremento na velocidade das naves inimigas a cada fase
 
 document.addEventListener('keydown', function(event) {
     if (event.code === 'ArrowLeft') {
@@ -33,7 +33,7 @@ function movePlayerRight() {
 
 function shoot() {
     bullet.style.display = 'block';
-    bullet.style.left = player.offsetLeft + (player.offsetWidth / 2) - 2 + 'px'; // Ajuste para centralizar o tiro
+    bullet.style.left = player.offsetLeft + (player.offsetWidth / 6) - 6 + 'px'; // Ajuste para centralizar o tiro
     bullet.style.bottom = '70px';
 
     let bulletInterval = setInterval(function() {
