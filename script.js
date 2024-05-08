@@ -6,6 +6,13 @@ let enemySpeed = 2; // Velocidade inicial das naves inimigas
 let currentPhase = 1;
 const PHASE_SCORE_THRESHOLD = [20, 40, 80, 120, 200, 350, 500]; // Pontuação necessária para avançar para a próxima fase
 const ENEMY_SPEED_INCREMENT = 1.0; // Incremento na velocidade das naves inimigas a cada fase
+const welcomeScreen = document.getElementById('welcomeScreen');
+const startButton = document.getElementById('startButton');
+
+startButton.addEventListener('click', function() {
+    welcomeScreen.style.display = 'none';
+    startGame();
+});
 
 document.addEventListener('keydown', function(event) {
     if (event.code === 'ArrowLeft') {
@@ -77,6 +84,7 @@ function createEnemy() {
         enemy.style.top = (enemyTop + enemySpeed) + 'px'; // Usamos a variável de velocidade aqui
 
         if (enemyTop > window.innerHeight) {
+            gameOver(); // Chamada da função gameOver() quando uma nave inimiga atinge a parte inferior da tela
             if (!enemy.classList.contains('hit')) {
                 updateMissedScore();
             }
@@ -84,6 +92,11 @@ function createEnemy() {
             clearInterval(enemyInterval);
         }
     }, 30);
+}
+
+function gameOver() {
+    alert('melhore :)');
+    location.reload(); // Recarrega a página quando o jogador perder
 }
 
 let score = 0;
